@@ -14,7 +14,7 @@ import { getBalance, getTransactions } from '../../api'
 import {connect} from 'react-redux';
 import { formatTransactionDates } from '../../utils'
 
-const DashboardScreen = ({ navigation, accountDetails, updateAccountDetails, updateTransactionHistory, transactionHistory }) => {
+const DashboardScreen = ({ navigation, accountDetails, updateAccountDetails, updateTransactionHistory, transactionHistory, logoutUser }) => {
 
   const {
     token,
@@ -93,7 +93,10 @@ const DashboardScreen = ({ navigation, accountDetails, updateAccountDetails, upd
 
   return (
     <SafeAreaView style={styles.dashboardContainer}>
-      <Text style={styles.logoutText} onPress={() => navigation.navigate('Login')}>Logout</Text>
+      <Text style={styles.logoutText} onPress={() => {
+        logoutUser();
+        navigation.navigate('Login');
+      }}>Logout</Text>
       <View style={[ styles.ownerDetailsView, styles.shadowProp]}>
         <Text style={{ fontWeight: 'bold' }}>You have</Text>
         <Text testID='balance' style={{ fontWeight: 'bold', fontSize: 25 }}>SGD {balance}</Text>
@@ -185,6 +188,9 @@ const mapDispatchToProps = (dispatch) => {
     updateTransactionHistory: (transactionHistory) => dispatch({
       type: 'UPDATE_TRANSACTION_HISTORY',
       transactionHistory
+    }),
+    logoutUser: () => dispatch({
+      type: 'LOGOUT_USER'
     })
   }
 }
