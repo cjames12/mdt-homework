@@ -75,10 +75,12 @@ const DashboardScreen = ({ navigation, accountDetails, updateAccountDetails, upd
                 {groupedTransaction[transactionHistoryDate].map(transaction =>
                   <View key={transaction.transactionId} style={styles.senderView}>
                     <View style={{ flex: 1}}>
-                      <Text style={{fontWeight: 'bold'}}>{transaction.receipient.accountHolder}</Text>
-                      <Text style={{ color: 'gray', fontSize: 12}}>{transaction.receipient.accountNo}</Text>
+                      <Text style={{fontWeight: 'bold'}}>{transaction.transactionType === 'received' ?
+                        transaction.sender.accountHolder : transaction.receipient.accountHolder}</Text>
+                      <Text style={{ color: 'gray', fontSize: 12}}>{transaction.transactionType === 'received' ?
+                        transaction.sender.accountNo : transaction.receipient.accountNo}</Text>
                     </View>
-                    <Text>{`- ${transaction.amount}`}</Text>
+                    <Text>{`${transaction.transactionType === 'received' ? '+' : '-'} ${transaction.amount}`}</Text>
                   </View>)}
               </View>
             })}
